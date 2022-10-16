@@ -1,6 +1,4 @@
-/* eslint-disable no-undef */
 import styled, { css } from 'styled-components';
-// import Button from './Button'
 
 export const ButtonEl = styled.button`
   display: inline-block;

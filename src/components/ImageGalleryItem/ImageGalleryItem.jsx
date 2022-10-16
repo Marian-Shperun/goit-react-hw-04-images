@@ -1,33 +1,34 @@
-import { Component } from 'react';
+import { useState } from 'react';
 import Modal from '../Modal/Modal';
+import PropTypes from 'prop-types';
+
 import { ImageGalleryItemEl } from './ImageGalleryItem.syled';
 
-class ImageGalleryItem extends Component {
-  state = {
-    showModal: false,
+const ImageGalleryItem = ({ item }) => {
+  const [showModal, setShowModal] = useState(false);
+
+  const toggleModal = () => {
+    setShowModal(!showModal);
   };
 
-  toggleModal = () => {
-    this.setState(({ showModal }) => ({
-      showModal: !showModal,
-    }));
-  };
+  const { largeImageURL, webformatURL, tags } = item;
+  return (
+    
+    <ImageGalleryItemEl>
 
-  render() {
-    const { largeImageURL, webformatURL, tags } = this.props.item;
-    return (
-      <ImageGalleryItemEl>
-        {this.state.showModal && (
-          <Modal close={this.toggleModal}>
-            <img src={largeImageURL} alt={tags} />
-          </Modal>
-        )}
-        <img onClick={this.toggleModal} src={webformatURL} alt={tags} />
-      </ImageGalleryItemEl>
-    );
-  }
-}
+      {showModal && (
+        <Modal close={toggleModal}>
+          <img src={largeImageURL} alt={tags} />
+        </Modal>
+      )}
+
+      <img onClick={toggleModal} src={webformatURL} alt={tags} />
+    </ImageGalleryItemEl>
+  );
+};
 
 export default ImageGalleryItem;
 
-
+ImageGalleryItem.propTypes = {
+  item: PropTypes.object.isRequired,
+};
